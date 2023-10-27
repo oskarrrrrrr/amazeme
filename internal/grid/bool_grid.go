@@ -12,19 +12,6 @@ type BoolGrid struct {
 	rows, cols int
 }
 
-type Cell struct {
-	Row, Col int
-}
-
-type Dir uint8
-
-const (
-	DirUp = iota
-	DirDown
-	DirLeft
-	DirRight
-)
-
 func NewBoolGrid(rows, cols int) BoolGrid {
 	horizWalls := (rows + 1) * cols
 	vertWalls := rows * (cols + 1)
@@ -45,27 +32,27 @@ func (grid BoolGrid) Cols() int {
 	return grid.cols
 }
 
-func (grid BoolGrid) getIdx(c Cell, d Dir) int {
+func (grid BoolGrid) getIdx(row, col int, d Dir) int {
 	switch d {
 	case DirUp:
-		return (c.Row * (grid.cols + 1)) + (c.Row * grid.cols) + c.Col
+		return (row * (grid.cols + 1)) + (row * grid.cols) + col
 	case DirDown:
-		return ((c.Row + 1) * (grid.cols + 1)) + ((c.Row + 1) * grid.cols) + c.Col
+		return ((row + 1) * (grid.cols + 1)) + ((row + 1) * grid.cols) + col
 	case DirLeft:
-		return (c.Row * (grid.cols + 1)) + ((c.Row + 1) * grid.cols) + c.Col
+		return (row * (grid.cols + 1)) + ((row + 1) * grid.cols) + col
 	case DirRight:
-		return (c.Row * (grid.cols + 1)) + ((c.Row + 1) * grid.cols) + c.Col + 1
+		return (row * (grid.cols + 1)) + ((row + 1) * grid.cols) + col + 1
 	default:
 		panic("Unexpected direction.")
 	}
 }
 
-func (grid *BoolGrid) AddWall(c Cell, d Dir) {
-	grid.walls[grid.getIdx(c, d)] = true
+func (grid *BoolGrid) AddWall(row, col int, d Dir) {
+	grid.walls[grid.getIdx(row, col, d)] = true
 }
 
-func (grid *BoolGrid) RemoveWall(c Cell, d Dir) {
-	grid.walls[grid.getIdx(c, d)] = false
+func (grid *BoolGrid) RemoveWall(row, col int, d Dir) {
+	grid.walls[grid.getIdx(row, col, d)] = false
 }
 
 func (grid BoolGrid) String() string {
