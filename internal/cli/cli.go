@@ -9,7 +9,7 @@ import (
 
 // TODO: add some options
 func Cli() {
-	N := 100
+	N := 10
 	g := grid.NewBoolGrid(N, N)
 	grid.SidewinderGen(&g)
 

@@ -1,7 +1,7 @@
 package grid
 
 import (
-	"github.com/ajstarks/svgo"
+	"github.com/oskarrrrrrr/amazeme/internal/svg"
 	"os"
 	"strings"
 )
@@ -104,8 +104,11 @@ func (grid BoolGrid) ToSVG(file_name string) {
 	canvas.Start(width, height)
 
 	drawLine := func(x1, y1, x2, y2 int) {
-		lineStyle := "stroke=\"black\" stroke-width=\"2\""
-		canvas.Line(margin+x1, margin+y1, margin+x2, margin+y2, lineStyle)
+		canvas.Line(
+			margin+x1, margin+y1, margin+x2, margin+y2,
+			svg.Attr("stroke", "black"),
+			svg.Attr("stroke-width", "2"),
+		)
 	}
 
 	idx := 0
